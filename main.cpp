@@ -5,14 +5,9 @@
 
 int main(int argc, char **argv)
 {
-    World world(Board("806547231").getHash());
-    if (!world.solved)
-        world.start();
+    Solution world(Board("806547231").calculateHash());
+    world.start();
 
-    Board g(BoardSpace::goalBoard);
-    Board b("806547231");
-
-//    std::cout << b.getManhattan() << std::endl;
     return 0;
 }
 

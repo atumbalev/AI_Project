@@ -3,21 +3,20 @@
 #include "Population.h"
 
 
-class World
+class Solution
 {
     private:
-        int pop_size;
-        int num_gens;
+        int populationSize;
+        int maxGeneration;
         int mutation;
         int crossover;
-        int origin;
         int elites;
         Population population;
         void seedPopulation();
 
         
     public:
-        World(int);
+        Solution(int);
         void start();
         bool solved;
 };

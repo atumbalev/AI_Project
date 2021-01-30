@@ -1,41 +1,35 @@
-#pragma once
-
 #include <vector>
 #include <cstring>
 
+#pragma once
+
 class Board
 {
-    private:
-        int board[9];
-        int hash;
-        int manhattan;
-        int moves[4];
-        double fitness;
+private:
+    int board[9];
+    int moves[4];
 
-        void calcHash();
-        void calcManhattan();
+    void calcMoves();
 
-        void calcMoves();
-        void calcFitness();
+public:
+    Board(const char *conf);
+    Board(const int arrayBoard[9]);
+    Board(int hash);
 
-    public:
-        Board(const char *conf);
-        Board(const int arrayBoard[9]);
-        Board(const int hash); 
-
-        int getHash() { calcHash(); return hash; }
-        int getManhattan() { calcManhattan(); return manhattan; }
-        double getFitness() { calcFitness(); return fitness; }
-        int * getBoard() { return board; }
-        int * getMoves() { calcMoves(); return moves; }
-        void prettyPrint();
-        void printConf();
+    int calculateHash();
+    int calculateManhattanDistance();
+    double calculateFitness() { return 1 - calculateManhattanDistance() * 0.01;}
+    int * getBoard() { return board; }
+    int * getMoves() { calcMoves(); return moves; }
+    void prettyPrint();
 };
 
 namespace BoardSpace
 {
-    const int goalBoard[9] = { 8, 0, 1, 2, 3, 4, 5, 6, 7 };
-    const int goalBoardHash = 123456780; 
+    // The delta board is the correct order cyclically moved 2 places to the right
+    // This is because the algorithm we are using uses indexing as a way to calculate the distance a misplaced tile should be placed in
+    const int deltaBoard[] = {8, 0, 1, 2, 3, 4, 5, 6, 7 };
+    const int goalBoardHash = 123456780;
 
     int getCol(int);
     int getRow(int);

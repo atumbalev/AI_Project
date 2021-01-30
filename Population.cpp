@@ -10,10 +10,10 @@ Population::Population(int _id, int size, int _boardStart)
     auto it = solutions.begin();
 
     for (int i=0; i<size; i++)
-        it = solutions.insert(it, Solution(_boardStart));
+        it = solutions.insert(it, Chromosome(_boardStart));
 }
 
-Solution Population::getBest()
+Chromosome Population::getBest()
 {
     return solutions[0];
 }
@@ -51,33 +51,16 @@ void Population::mutate(int mrate)
         int r = rand() % mrate;
         if (r == 0)
         {
-            r = rand() % 4;
-            if (r == 0) solutions[i].growBestNoCycle();
-            if (r == 1) solutions[i].growNoCycle();
-            if (r == 2) solutions[i].mutate();
-            if (r == 3) solutions[i].truncate();
+            switch (rand() % 2)
+            {
+                case 0:
+                    solutions[i].growNoCycle();
+                    break;
+                case 1:
+                    solutions[i].mutate();
+                    break;
+            }
         }
     }
 }
 
-int Population::getUniqueIndividuals()
-{
-    // clear hash
-    uniques.clear();
-    for (int i=0; i<solutions.size(); i++)
-    {
-        // not in hash yet
-        if (uniques.count(solutions[i].getStatus()) == 0)
-        {
-            uniques.insert(make_pair(solutions[i].getStatus(), 1));
-        }
-
-        // already in hash so update count
-        else
-        {
-            uniques[solutions[i].getStatus()]++;
-        }
-
-    }
-    return uniques.size();
-}

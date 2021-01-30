@@ -8,17 +8,15 @@ class Population
 {
     private:
         int id;
-        vector<Solution> solutions;
-        map<int,int> uniques;
+        vector<Chromosome> solutions;
 
     public:
         Population(int, int, int);
         void sort();
         void age();
         bool checkSolved();
-        Solution getBest();
+        Chromosome getBest();
         void mutate(int);
         void selection(int, int);
-        int getUniqueIndividuals();
 };
 
